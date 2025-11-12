@@ -13,7 +13,6 @@ class BinaryTreeNode<T> {
 
 public class Tree<T> {
     static Scanner sc;
-    private int idx = -1;
 
     public static void main(String[] args) {
         sc = new Scanner(System.in);
@@ -22,30 +21,33 @@ public class Tree<T> {
 
         Tree<Integer> treeObj = new Tree<>();
 
-        BinaryTreeNode<Integer> root = treeObj.buildBinaryTree(tree);
+        // Pass the index as a parameter
+        BinaryTreeNode<Integer> root = treeObj.buildBinaryTree(tree, new int[]{-1});
 
         treeObj.preorderTraversal(root);
 
         sc.close();
     }
 
-    public BinaryTreeNode<T> buildBinaryTree(T[] arr) {
-        idx++;
+    // Modify buildBinaryTree to accept index as a parameter
+    public BinaryTreeNode<T> buildBinaryTree(T[] arr, int[] idx) {
+        idx[0]++; // Increment index
 
-        // Check if idx exceeds the array length
-        if (idx >= arr.length || arr[idx] == null) {
+        // Check if idx exceeds the array length or the element is null
+        if (idx[0] >= arr.length || arr[idx[0]] == null) {
             return null;
         }
 
-        BinaryTreeNode<T> root = new BinaryTreeNode<>(arr[idx]);
+        BinaryTreeNode<T> root = new BinaryTreeNode<>(arr[idx[0]]);
 
         // Recursively build the left and right subtrees
-        root.left = buildBinaryTree(arr);
-        root.right = buildBinaryTree(arr);
+        root.left = buildBinaryTree(arr, idx);
+        root.right = buildBinaryTree(arr, idx);
 
         return root;
     }
 
+    // Preorder traversal: root -> left -> right
     public void preorderTraversal(BinaryTreeNode<T> root) {
         if (root == null) {
             return;
